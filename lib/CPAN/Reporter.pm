@@ -1024,10 +1024,13 @@ sub _prereq_report {
     # find formatting widths
     my ($name_width, $need_width, $have_width) = (6, 4, 4);
     for my $section ( @prereq_sections ) {
+        print STDERR "AAA: section: $section\n";
         for my $module ( keys %{ $need{$section} } ) {
+            print STDERR "BBB: module: $module\n";
             my $name_length = length $module;
             my $need_length = length $need{$section}{$module};
             my $have_length = length $have{$section}{$module};
+            print STDERR "CCC: ", (join '|' => ($name_length, $need_length, $have_length)), "\n";
             $name_width = $name_length if $name_length > $name_width;
             $need_width = $need_length if $need_length > $need_width;
             $have_width = $have_length if $have_length > $have_width;
@@ -1049,6 +1052,7 @@ sub _prereq_report {
         for my $module (sort {lc $a cmp lc $b} keys %{ $need{$section} } ) {
           my $need = $need{$section}{$module};
           my $have = $have{$section}{$module};
+          print STDERR "DDD: have: $have\n";
           my $bad = $prereq_met{$section}{$module} ? " " : "!";
           $report .=
           sprintf( $format_str, $bad, $module, $need, $have);
